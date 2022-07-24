@@ -1,0 +1,8 @@
+{
+  "name": "Qubes Coloring",
+  "description": "Color the applications windows based on the qube",
+  "uuid": "QubesColoring@mogh99.com",
+  "shell-version": [
+    "42"
+  ]
+}
