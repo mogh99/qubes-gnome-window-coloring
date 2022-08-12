@@ -34,7 +34,7 @@ class Extension {
     }
 
     windowCreated(display, metaWindow) {
-        log("Window Created")
+        log(`${Me.metadata.name}: Window Created`)
 
         let window = new Window.Window(metaWindow, this.deleteWindow.bind(this))
 
@@ -45,7 +45,7 @@ class Extension {
     }
 
     deleteWindow(windowIDX){
-        log("Window Deleted = "+windowIDX)
+        log(`${Me.metadata.name}: Window Deleted = ${windowIDX}`)
 
         delete this.windows[windowIDX]
     }
@@ -69,7 +69,7 @@ class Extension {
         try {
             metaWindow = child.get_meta_window()
         } catch (error) {
-            log(error)
+            log(`${Me.metadata.name}: ${error}`)
         }
 
         if(!metaWindow) return false;
@@ -86,8 +86,8 @@ class Extension {
     }
 
     enable() {
-        log("Enabled")
-        
+        log(`enabling ${Me.metadata.name}`)
+
         this.winCreatedHandlerID = global.display.connect('window-created', this.windowCreated.bind(this))
         this.restackHandlerID = global.display.connect('restacked', this.restack.bind(this))
 
@@ -97,9 +97,7 @@ class Extension {
 
                 if (!metaWindow) return;
 
-                log(Window.Window)
                 let window = new Window.Window(metaWindow, this.deleteWindow.bind(this))
-
                 
                 this.windows[metaWindow.get_description()] = window
                 global.window_group.add_child(window.border)
@@ -109,7 +107,7 @@ class Extension {
     }
 
     disable() {
-        log("Disabled")
+        log(`disabling ${Me.metadata.name}`)
 
         for (let windowIdx in this.windows){
             this.windows[windowIdx].windowClosed()
@@ -122,5 +120,7 @@ class Extension {
 }
 
 function init(meta) {
-    return new Extension(meta.uuid);
+    log(`initializing ${Me.metadata.name}`)
+
+    return new Extension(meta.uuid)
 }

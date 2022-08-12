@@ -20,7 +20,7 @@ class Window{
         
         let rect = this.metaWindow.get_frame_rect()
         this.border.set_position(rect.x, rect.y)
-        this.border.set_size(rect.width - BORDERSIZE, rect.height - BORDERSIZE)
+        this.border.set_size(rect.width + BORDERSIZE, rect.height + BORDERSIZE)
         this.setBorderColor()
 
         this.closedID = this.windowActor.connect('destroy', this.windowClosed.bind(this))
@@ -36,14 +36,14 @@ class Window{
     }
 
     updateBorderLayout(){
-        log("Update Window Border")
+        log(`${Me.metadata.name}: Update Window Border`)
         let rect = this.metaWindow.get_frame_rect()
         this.border.set_position(rect.x, rect.y)
         this.border.set_size(rect.width + BORDERSIZE, rect.height + BORDERSIZE)
     }
 
     windowClosed(){
-        log("Window Closed")
+        log(`${Me.metadata.name}: Window Closed`)
 
         global.window_group.remove_child(this.border)
 
